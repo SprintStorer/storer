@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import OfficeTable from './OfficeTable.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    const offices = [
+      {
+        slug: 'zero-q-demo',
+        name: 'Zeroq Demo',
+        devices: [
+          {
+            type: "totem",
+            ip: '192.168.1.200',
+          },
+          {
+            type: "tv-box",
+            ip: '192.168.1.201',
+          }
+        ]
+      },
+      {
+        slug: 'zero-q-mock',
+        name: 'Zeroq Mock',
+        devices: [
+          {
+            type: "totem",
+            ip: '192.168.1.202',
+          },
+          {
+            type: "tv-box",
+            ip: '192.168.1.203',
+          }
+        ]
+      },
+      {
+        slug: 'zero-q-sam',
+        name: 'Zeroq Sam',
+        devices: [
+          {
+            type: "totem",
+            ip: '192.168.1.204',
+          },
+          {
+            type: "tv-box",
+            ip: '192.168.1.205',
+          }
+        ]
+      }
+    ]
+    return (
+      <div>
+        <div>
+          <h1>Informer</h1> 
+      </div>
+        <OfficeTable offices={offices}/>
+      </div>
+    );
+  }
 }
 
 export default App;
