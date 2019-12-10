@@ -1,6 +1,7 @@
 {
   "name": "storer",
   "version": "0.1.0",
+  "description": "store information from totems and devices",
   "private": true,
   "dependencies": {
     "antd": "^3.13.14",
