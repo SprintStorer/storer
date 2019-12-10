@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import './App.css';
 import OfficeTable from './components/OfficeTable.js'
 import * as R from 'ramda'
+import { Input } from 'antd';
+const { Search } = Input;
 
 const App = () => {
-  const [ offices, setOffices ] = useState({});
-  const [ office, setOffice ] = useState({})
+  // const [ offices, setOffices ] = useState({})
 
-  const handleChangeOffice = (e) => {
-    setOffice(e.target.value)
-  }
+  // const handleChangeOffice = (e) => {
+  //   setOffice(e.target.value)
+  // }
 
   const state = {
     offices: {
@@ -64,6 +65,8 @@ const App = () => {
     }
   }
 
+  const [ searchObjHolder, setSearchObjHolder ] = useState(state)
+
   const setDeviceIp = (event, officeSlug, code) => {
     console.log(event.target.value)
     const ip = event.target.value
@@ -71,16 +74,47 @@ const App = () => {
     // this.setState({ offices: officesUpdated })
   }
 
+  const handleOnSearch = officeText => {
+    const cleanOfficeText = officeText.toLowerCase();
+    console.log('search text:', cleanOfficeText)
+    const patt = new RegExp(cleanOfficeText)
+    const filtered = R.filter(office => {
+      const test = patt.test(office.name.toLowerCase())
+      return test
+    }, state.offices)
+    setSearchObjHolder({ offices: filtered })
+  }
+
+  const handleSearchOnChange = e => {
+    const officeText = e.target.value
+    if (e.target.value === "") return setSearchObjHolder(state)
+    if (officeText.length < 3) return
+
+    const cleanOfficeText = officeText.toLowerCase()
+    const patt = new RegExp(cleanOfficeText)
+    const filtered = R.filter(office => {
+      const test = patt.test(office.name.toLowerCase())
+      return test
+    }, state.offices)
+    setSearchObjHolder({ offices: filtered })
+  }
+
   return (
     <div>
       <div>
         <h1>Storer</h1>
       </div>
+      <Search
+        className="search-bar"
+        placeholder="search for an office"
+        enterButton="Search"
+        size="large"
+        onSearch={handleOnSearch}
+        onChange={handleSearchOnChange}
+      />
       <OfficeTable 
-        offices={R.values(state.offices)}
+        offices={R.values(searchObjHolder.offices)}
         setDeviceIp={setDeviceIp}
-        office={office}
-        handleChangeOffice={handleChangeOffice}
       />
     </div>
   );

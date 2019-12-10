@@ -3,9 +3,8 @@ import './OfficeTable.css'
 import { Collapse, Card, Input } from 'antd';
 import * as R from 'ramda'
 const { Panel } = Collapse;
-const { Search } = Input;
 
-const Devices = ({ officeSlug, devices, setDeviceIp, handleChangeOffice, office }) => {
+const Devices = ({ officeSlug, devices, setDeviceIp }) => {
   return R.values(devices).map(device => (
     <div className="device-card">
       <Card
@@ -25,29 +24,19 @@ const Devices = ({ officeSlug, devices, setDeviceIp, handleChangeOffice, office 
   )
 }
 
-const OfficeTable = ({ offices, setDeviceIp, handleChangeOffice, office }) => {
+const OfficeTable = ({ offices, setDeviceIp }) => {
   const rows = offices.map(off => {
     return( 
       <Panel header={off.name} key={off.slug}>
         <Devices key={off.slug}
           officeSlug={off.slug}
           devices={off.devices}
-          setDeviceIp={setDeviceIp}
-          office={office}
-          handleChangeOffice={handleChangeOffice}/>
+          setDeviceIp={setDeviceIp} />
       </Panel>
     )
   })
   return(
     <div>
-      <div className="search-bar">
-        <Search
-          placeholder="search for and office"
-          enterButton="Search"
-          size="large"
-          onSearch={value => console.log(value)}
-        />
-      </div>
       <div className="office-table-list">
         <Collapse defaultActiveKey={[]}>
           {rows}
