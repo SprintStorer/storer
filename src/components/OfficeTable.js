@@ -6,23 +6,23 @@ const { Panel } = Collapse;
 const { Search } = Input;
 
 const Devices = ({ officeSlug, devices, setDeviceIp, handleChangeOffice, office }) => {
-    return R.values(devices).map(device => (
-      <div className="device-card">
-        <Card 
-          key={device.code} 
-          title={device.type} 
-          style={{ width: 300 }}>
-          {/* <p>{device.ip}</p>  */}
-          <Input 
-            key={device.code} 
-            addonBefore="ip"
-            placeholder={device.ip} 
-            size="small" 
-            style={{ width: 200 }} 
-            onChange={(e) => { setDeviceIp(e, officeSlug, device.code) }}/>
-        </Card>
-      </div>)
-    )
+  return R.values(devices).map(device => (
+    <div className="device-card">
+      <Card
+        key={device.code}
+        title={device.type}
+        style={{ width: 300 }}>
+        {/* <p>{device.ip}</p>  */}
+        <Input
+          key={device.code}
+          addonBefore="ip"
+          placeholder={device.ip}
+          size="small"
+          style={{ width: 200 }}
+          onChange={(e) => { setDeviceIp(e, officeSlug, device.code) }}/>
+      </Card>
+    </div>)
+  )
 }
 
 const OfficeTable = ({ offices, setDeviceIp, handleChangeOffice, office }) => {
