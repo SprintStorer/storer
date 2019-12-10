@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import OfficeTable from './OfficeTable.js'
+import OfficeTable from './components/OfficeTable.js'
 import * as R from 'ramda'
 
 const App = () => {
@@ -12,60 +12,56 @@ const App = () => {
   }
 
   const state = {
-    ip: null,
     offices: {
-      'zero-q-demo': 
-        {
-          slug: 'zero-q-demo',
-          name: 'Zeroq Demo',
-          devices: {
-            'adsf2-demo': {
-              code: 'adsf2-demo',
-              type: "totem",
-              ip: '192.168.1.200',
-            },
-            'adsf2-demo1': {
-              code: 'adsf2-demo',
-              type: "tv-box",
-              ip: '192.168.1.201',
-            }
-          }
-        },
-      'zero-q-mock': 
-        {
-          slug: 'zero-q-mock',
-          name: 'Zeroq Mock',
-          devices: {
-            'adsf-mock': {
-              code: 'adsf-mock',
-              type: "totem",
-              ip: '192.168.1.202',
-            },
-            'adsf2-mock': {
-              code: 'adsf2-mock',
-              type: "tv-box",
-              ip: '192.168.1.203',
-            }
-          }
-        },
-        'zero-q-sam': 
+      'zero-q-demo': {
+        slug: 'zero-q-demo',
+        name: 'Zeroq Demo',
+        devices: [
           {
-            slug: 'zero-q-sam',
-            name: 'Zeroq Sam',
-            devices: {
-              'asdf-sam': {
-                code: 'asdf-sam',
-                type: 'totem',
-                ip: '192.168.1.204',
-              },
-              'asdf-sam2': {
-                code: 'asdf-sam',
-                type: "tv-box",
-                ip: '192.168.1.205',
-              }
-            }
+            code: 'adsf2-demo',
+            type: "totem",
+            ip: '192.168.1.200',
+          },
+          {
+            code: 'adsf2-demo',
+            type: "tv-box",
+            ip: '192.168.1.201',
           }
-        }
+        ]
+      },
+      'zero-q-mock': {
+        slug: 'zero-q-mock',
+        name: 'Zeroq Mock',
+        devices: [
+          {
+            code: 'adsf-mock',
+            type: "totem",
+            ip: '192.168.1.202',
+          },
+          {
+            code: 'adsf2-mock',
+            type: "tv-box",
+            ip: '192.168.1.203',
+          }
+        ]
+      },
+      'zero-q-sam': {
+          slug: 'zero-q-sam',
+          name: 'Zeroq Sam',
+          devices: [
+            {
+              code: 'asdf-sam',
+              type: 'totem',
+              ip: '192.168.1.204',
+            },
+            {
+              code: 'asdf-sam',
+              type: "tv-box",
+              ip: '192.168.1.205',
+            }
+          ]
+      }
+    }
   }
 
   const setDeviceIp = (event, officeSlug, code) => {
