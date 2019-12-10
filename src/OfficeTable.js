@@ -1,52 +1,61 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './OfficeTable.css'
 import { Collapse, Card, Input } from 'antd';
+import * as R from 'ramda'
 const { Panel } = Collapse;
 const { Search } = Input;
 
-const Devices = props => {
-  const { devices } = props;
-    return devices.map(device => (
+const Devices = ({ officeSlug, devices, setDeviceIp, handleChangeOffice, office }) => {
+    return R.values(devices).map(device => (
       <div className="device-card">
-        <Card title={device.type} key={device.ip} style={{ width: 200 }}>
-          <p>{device.ip}</p>
+        <Card 
+          key={device.code} 
+          title={device.type} 
+          style={{ width: 300 }}>
+          {/* <p>{device.ip}</p>  */}
+          <Input 
+            key={device.code} 
+            addonBefore="ip"
+            placeholder={device.ip} 
+            size="small" 
+            style={{ width: 200 }} 
+            onChange={(e) => { setDeviceIp(e, officeSlug, device.code) }}/>
         </Card>
       </div>)
     )
 }
 
-class OfficeTable extends Component {
-  render() {
-    function callback(key) {
-      console.log(key);
-    }
-    const { offices } = this.props;
-
-    const rows = offices.map(office => {
-      return( 
-        <Panel header={office.name} key={office.slug}>
-          <Devices devices={office.devices}/>
-        </Panel>
-      )
-    })
-    return(
-      <div>
-        <div className="search-bar">
-          <Search
-            placeholder="search for and office"
-            enterButton="Search"
-            size="large"
-            onSearch={value => console.log(value)}
-          />
-        </div>
-        <div className="office-table-list">
-          <Collapse defaultActiveKey={[]} onChange={callback}>
-            {rows}
-          </Collapse>
-        </div>
-      </div>
+const OfficeTable = ({ offices, setDeviceIp, handleChangeOffice, office }) => {
+  const rows = offices.map(off => {
+    return( 
+      <Panel header={off.name} key={off.slug}>
+        <Devices key={off.slug}
+          officeSlug={off.slug}
+          devices={off.devices}
+          setDeviceIp={setDeviceIp}
+          office={office}
+          handleChangeOffice={handleChangeOffice}/>
+      </Panel>
     )
-  }
+  })
+  return(
+    <div>
+      <div className="search-bar">
+        <Search
+          placeholder="search for and office"
+          enterButton="Search"
+          size="large"
+          onSearch={value => console.log(value)}
+        />
+      </div>
+      <div className="office-table-list">
+        <Collapse defaultActiveKey={[]}>
+          {rows}
+        </Collapse>
+      </div>
+    </div>
+  )
 }
+
 
 export default OfficeTable
