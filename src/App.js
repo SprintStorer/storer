@@ -78,7 +78,7 @@ const App = () => {
   return (
     <div>
       <div>
-        <h1>Informer</h1> 
+        <h1>Storer</h1>
       </div>
       <OfficeTable 
         offices={R.values(state.offices)}
