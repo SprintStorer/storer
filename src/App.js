@@ -6,72 +6,77 @@ import { Input } from 'antd';
 const { Search } = Input;
 
 const App = () => {
-  // const [ offices, setOffices ] = useState({})
 
-  // const handleChangeOffice = (e) => {
-  //   setOffice(e.target.value)
-  // }
-
-  const state = {
-    offices: {
-      'zero-q-demo': {
-        slug: 'zero-q-demo',
-        name: 'Zeroq Demo',
+  const initOffices = {
+    'zero-q-demo': {
+      slug: 'zero-q-demo',
+      name: 'Zeroq Demo',
+      devices: [
+        {
+          id: 1,
+          code: 'adsf2-demo-1',
+          type: "totem",
+          ip: '192.168.1.200',
+        },
+        {
+          id: 2,
+          code: 'adsf2-demo-2',
+          type: "tv-box",
+          ip: '192.168.1.201',
+        }
+      ]
+    },
+    'zero-q-mock': {
+      slug: 'zero-q-mock',
+      name: 'Zeroq Mock',
+      devices: [
+        {
+          id: 3,
+          code: 'adsf-mock.1',
+          type: "totem",
+          ip: '192.168.1.202',
+        },
+        {
+          id: 4,
+          code: 'adsf2-mock-2',
+          type: "tv-box",
+          ip: '192.168.1.203',
+        }
+      ]
+    },
+    'zero-q-sam': {
+        slug: 'zero-q-sam',
+        name: 'Zeroq Sam',
         devices: [
           {
-            code: 'adsf2-demo',
-            type: "totem",
-            ip: '192.168.1.200',
+            id: 5,
+            code: 'asdf-sam-1',
+            type: 'totem',
+            ip: '192.168.1.204',
           },
           {
-            code: 'adsf2-demo',
+            id: 6,
+            code: 'asdf-sam-2',
             type: "tv-box",
-            ip: '192.168.1.201',
+            ip: '192.168.1.205',
           }
         ]
-      },
-      'zero-q-mock': {
-        slug: 'zero-q-mock',
-        name: 'Zeroq Mock',
-        devices: [
-          {
-            code: 'adsf-mock',
-            type: "totem",
-            ip: '192.168.1.202',
-          },
-          {
-            code: 'adsf2-mock',
-            type: "tv-box",
-            ip: '192.168.1.203',
-          }
-        ]
-      },
-      'zero-q-sam': {
-          slug: 'zero-q-sam',
-          name: 'Zeroq Sam',
-          devices: [
-            {
-              code: 'asdf-sam',
-              type: 'totem',
-              ip: '192.168.1.204',
-            },
-            {
-              code: 'asdf-sam',
-              type: "tv-box",
-              ip: '192.168.1.205',
-            }
-          ]
-      }
     }
   }
 
-  const [ searchObjHolder, setSearchObjHolder ] = useState(state)
+  const [ offices, setOffices ] = useState(initOffices)
 
-  const setDeviceIp = (event, officeSlug, code) => {
-    console.log(event.target.value)
-    const ip = event.target.value
-    const officesUpdated = R.assocPath([officeSlug, 'devices', code, 'ip'], ip, this.state.offices)
-    // this.setState({ offices: officesUpdated })
+  const [ searchObjHolder, setSearchObjHolder ] = useState(offices)
+
+  const handleEditDevice = ({ officeSlug, ...device }) => {
+    console.log('office slug', officeSlug)
+    console.log('deviceItem', device)
+
+    const devices = offices[officeSlug].devices
+    const updatedDevices = [ device, ...devices.filter(d => d.id !== device.id)]
+    const officesUpdated = R.assocPath([officeSlug, 'devices'], updatedDevices, offices)
+    console.log(officesUpdated)
+    setOffices(officesUpdated)
   }
 
   const handleOnSearch = officeText => {
@@ -81,13 +86,13 @@ const App = () => {
     const filtered = R.filter(office => {
       const test = patt.test(office.name.toLowerCase())
       return test
-    }, state.offices)
+    }, offices)
     setSearchObjHolder({ offices: filtered })
   }
 
   const handleSearchOnChange = e => {
     const officeText = e.target.value
-    if (e.target.value === "") return setSearchObjHolder(state)
+    if (e.target.value === "") return setSearchObjHolder(initOffices)
     if (officeText.length < 3) return
 
     const cleanOfficeText = officeText.toLowerCase()
@@ -95,7 +100,7 @@ const App = () => {
     const filtered = R.filter(office => {
       const test = patt.test(office.name.toLowerCase())
       return test
-    }, state.offices)
+    }, offices)
     setSearchObjHolder({ offices: filtered })
   }
 
@@ -114,7 +119,7 @@ const App = () => {
       />
       <OfficeTable 
         offices={R.values(searchObjHolder.offices)}
-        setDeviceIp={setDeviceIp}
+        handleEditDevice={handleEditDevice}
       />
     </div>
   );
