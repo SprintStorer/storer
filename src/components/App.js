@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import OfficeTable from './components/OfficeTable.js'
+import OfficeTable from './OfficeTable.js'
 import * as R from 'ramda'
-import { Input } from 'antd'
+import { Input, Icon, Empty } from 'antd'
 import axios from 'axios'
 const { Search } = Input
 
@@ -49,7 +49,11 @@ const App = () => {
   return (
     <div>
       <div>
-        <h1>Storer</h1>
+        
+      <h1 className="title">
+        <Icon type="database" />
+        Storer
+      </h1>
       </div>
       <Search
         className="search-bar"
@@ -62,6 +66,7 @@ const App = () => {
       <OfficeTable 
         offices={R.values(searchObjHolder.offices)}
       />
+      {searchObjHolder.offices ? null : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
     </div>
   )
 }
