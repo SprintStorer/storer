@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import './Devices.css'
 import * as R from 'ramda'
 import { Card, Form, Input, Button } from 'antd'
 
 const Devices = ({ officeSlug, devices, handleEditDevice }) => {
-  const [isBlocked, setIsBlocked] = useState(true)
+  const initialState = R.values(devices).map(device => device.id)
+  const [isBlocked, setIsBlocked] = useState(initialState)
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -14,11 +16,14 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
     handleEditDevice({ id, ip, code, type, officeSlug })
   }
 
-  const blockUnBlock = () => {
-    setIsBlocked(!isBlocked)
+  const blockUnBlock = id => {
+    const updateBlocked = isBlocked.includes(id) ?
+      isBlocked.filter(arr => arr !== id) :
+      [...isBlocked, id]
+    setIsBlocked(updateBlocked)
   }
 
-  return R.values(devices).map(device => (
+  const cards = R.values(devices).map(device => (
     <Card
       key={device.code}
       title={device.type}
@@ -37,7 +42,7 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
           <Input
             addonBefore="ip"
             defaultValue={device.ip}
-            disabled={isBlocked}
+            disabled={isBlocked.includes(device.id)}
             style={{ width: 200 }}/>
         </Form.Item>
 
@@ -45,7 +50,7 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
           <Input
             addonBefore="code"
             defaultValue={device.code}
-            disabled={isBlocked}
+            disabled={isBlocked.includes(device.id)}
             style={{ width: 200 }}/>
         </Form.Item>
 
@@ -59,7 +64,7 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
           <Button
             type="primary"
             htmlType="submit"
-            disabled={isBlocked}>
+            disabled={isBlocked.includes(device.id)}>
               Submit
             </Button>
         </Form.Item>
@@ -68,13 +73,18 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
 
       <Button
         type="secundary"
-        onClick={() => blockUnBlock()}>
+        onClick={() => blockUnBlock(device.id)}>
 
           {isBlocked ? "Unblock": "block"}
 
       </Button>
     </Card>)
   )
+
+  return (
+    <div className="card-wrapper">
+      {cards}
+    </div>)
 }
 
 export default Devices
