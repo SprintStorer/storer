@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as R from 'ramda'
 import { Card, Form, Input, Button } from 'antd'
 
 const Devices = ({ officeSlug, devices, handleEditDevice }) => {
+  const [isBlocked, setIsBlocked] = useState(true)
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -11,6 +12,10 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
     console.log('form submited')
     console.log(`ip: ${ip}, code: ${code}, id: ${id}, type: ${type}`)
     handleEditDevice({ id, ip, code, type, officeSlug })
+  }
+
+  const blockUnBlock = () => {
+    setIsBlocked(!isBlocked)
   }
 
   return R.values(devices).map(device => (
@@ -32,6 +37,7 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
           <Input
             addonBefore="ip"
             defaultValue={device.ip}
+            disabled={isBlocked}
             style={{ width: 200 }}/>
         </Form.Item>
 
@@ -39,6 +45,7 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
           <Input
             addonBefore="code"
             defaultValue={device.code}
+            disabled={isBlocked}
             style={{ width: 200 }}/>
         </Form.Item>
 
@@ -49,13 +56,23 @@ const Devices = ({ officeSlug, devices, handleEditDevice }) => {
         </Form.Item>
         
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={isBlocked}>
               Submit
             </Button>
         </Form.Item>
 
       </Form>
 
+      <Button
+        type="secundary"
+        onClick={() => blockUnBlock()}>
+
+          {isBlocked ? "Unblock": "block"}
+
+      </Button>
     </Card>)
   )
 }
