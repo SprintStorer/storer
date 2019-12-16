@@ -1,0 +1,13 @@
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ant-card {
+  margin: 5px;
+}
+
+.ant-row {
+  margin: 5px;
+}
