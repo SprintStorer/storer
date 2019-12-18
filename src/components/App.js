@@ -47,14 +47,13 @@ const App = () => {
   }
 
   return (
-    <div>
-      <div>
-        
+    <div className="content">
+
       <h1 className="title">
         <Icon type="database" />
         Storer
       </h1>
-      </div>
+
       <Search
         className="search-bar"
         placeholder="search for an office"
@@ -63,10 +62,17 @@ const App = () => {
         onSearch={handleOnSearch}
         onChange={handleSearchOnChange}
       />
+
       <OfficeTable 
         offices={R.values(searchObjHolder.offices)}
       />
+
       {searchObjHolder.offices ? null : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+
+      <footer class="footer">
+        Copyright &copy; ZeroQ ©2019 Authors: K.Becerra, S.Espnioza, R.Thielen.
+      </footer>
+      
     </div>
   )
 }
