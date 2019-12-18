@@ -1,16 +1,23 @@
-import React from 'react'
-import { Card, Form, Button, Input } from 'antd'
+import React, { useState } from 'react'
+import { Card, Form, Button, Input, Alert } from 'antd'
 import axios from 'axios'
 
 const Device = ({ device, officeSlug, isBlocked, blockUnBlock }) => {
+  const [alert, setAlert] = useState('')
 
   const handleEditDevice = ({ officeSlug, ...device }) => {
     console.log('office slug', officeSlug)
     console.log('deviceItem', device)
 
     const updateDevice = async () => {
-      const { data } = await axios.post(`http://localhost:4000/mock/offices/${officeSlug}/device`, { device } )
-      console.log('device updated:', data)
+      try {
+        const { data } = await axios.post(`http://localhost:4000/mock/offices/${officeSlug}/device`, { device } )
+        console.log('device updated:', data)
+        setAlert('success')
+      } catch (error) {
+        console.error('error on updateDevice', error)
+        setAlert('error')
+      }
     }
     updateDevice()
   }
@@ -23,12 +30,26 @@ const Device = ({ device, officeSlug, isBlocked, blockUnBlock }) => {
     console.log(`ip: ${ip}, code: ${code}, id: ${id}, type: ${type}`)
     handleEditDevice({ id, ip, code, type, officeSlug })
   }
+
+  const getAlertType = (type) => {
+    const message = (type === 'success') ? 'Device updated' : 'Error on update'
+    return (
+      <Alert
+          message={message}
+          type={type}
+          closable={true}
+          showIcon />
+    )
+  }
+
   return (
 
   <Card
       key={device.code}
       title={device.type}
       style={{ width: 300 }}>
+
+      {alert === '' ? null : alert === 'success'  ? getAlertType('success') : getAlertType('error')}
 
       <Form onSubmit={handleSubmit}>
         <Form.Item>
