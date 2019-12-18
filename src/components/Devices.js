@@ -4,7 +4,7 @@ import * as R from 'ramda'
 import { Card, Form, Input, Button } from 'antd'
 
 const Devices = ({ officeSlug, devices, handleEditDevice }) => {
-  const initialState = R.values(devices).map(device => device.id)
+  const initialState = R.values(devices).map(({ id }) => id)
   const [isBlocked, setIsBlocked] = useState(initialState)
 
   const handleSubmit = e => {
