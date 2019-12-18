@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import * as R from 'ramda'
 import axios from 'axios'
 import './OfficeTable.css'
 import Devices from './Devices'
@@ -9,25 +8,9 @@ const { Panel } = Collapse
 const OfficeTable = ({ offices }) => {
   const [office, setOffice] = useState({})
 
-  const handleEditDevice = ({ officeSlug, ...device }) => {
-    console.log('office slug', officeSlug)
-    console.log('deviceItem', device)
-
-    const updatedDevices = [ device, ...office.devices.filter(d => d.id !== device.id)]
-    const officeUpdated = R.assocPath([office.slug, 'devices'], updatedDevices, office)
-    console.log(officeUpdated)
-    const updateDevice = async () => {
-      const { data } = await axios.post(`http://localhost:4000/mock/offices/${officeSlug}/device`, { device } )
-      console.log('device updated:', data)
-      setOffice(officeUpdated)
-    }
-    updateDevice()
-  }
-
-  const handleOnChangeCollapse = e => {
-    if (!e) return
-    console.log('changed!', e)
-    const officeTarget = e
+  const handleOnChangeCollapse = officeTarget => {
+    if (!officeTarget) return
+    
     const fetchData = async () => {
       try {
         console.log(`requesting: http://localhost:4000/mock/offices/${officeTarget}`)
@@ -51,7 +34,7 @@ const OfficeTable = ({ offices }) => {
           key={`${office.slug}-${offices.indexOf(off)}`}
           officeSlug={office.slug}
           devices={office.devices}
-          handleEditDevice={handleEditDevice} />
+        />
 
       </Panel>
     )
