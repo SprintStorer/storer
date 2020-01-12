@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Devices.css'
 import * as R from 'ramda'
-import Device from './Device'
+import Device from '../Device/Device'
 
 const Devices = ({ officeSlug, devices }) => {
   const initialState = R.values(devices).map(({ id }) => id)

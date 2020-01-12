@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import './OfficeTable.css'
-import Devices from './Devices'
+import Devices from '../Devices/Devices'
 import { Collapse } from 'antd'
 const { Panel } = Collapse
 

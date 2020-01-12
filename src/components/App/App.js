@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import OfficeTable from './OfficeTable.js'
+import OfficeTable from '../OfficeTable/OfficeTable'
 import * as R from 'ramda'
 import { Input, Icon, Empty } from 'antd'
 import axios from 'axios'
