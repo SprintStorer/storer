@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import './OfficeTable.css'
+import Office from '../Office/Office'
 import Devices from '../Devices/Devices'
 import { Collapse } from 'antd'
 const { Panel } = Collapse
@@ -30,6 +31,11 @@ const OfficeTable = ({ offices }) => {
         key={off.slug}
         header={off.name}>
         
+        <Office
+          key={office.slug}
+          office={office}
+        />
+
         <Devices
           key={`${office.slug}-${offices.indexOf(off)}`}
           officeSlug={office.slug}
