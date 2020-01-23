@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Icon, Input } from 'antd'
+import { Icon, Input, notification } from 'antd'
 import './Attribute.css'
 // import axios from 'axios'
 
-const Attribute = ({ slug, attribute, addonBefore, placeholder, setAlert }) => {
+const Attribute = ({ slug, attribute, addonBefore, placeholder }) => {
   const [ attributeText, setAttributeText ] = useState('')
   const [ editState, setEditState ] = useState('edit')
   const [ disabledState, setdisabledState ] = useState(true)
@@ -12,13 +12,20 @@ const Attribute = ({ slug, attribute, addonBefore, placeholder, setAlert }) => {
     setAttributeText(e.target.value)
   }
 
+  const openNotification = (placement, attribute) => {
+    notification.success({
+      message: `Changes Saved`,
+      description:
+        `${attribute} updated!`,
+      placement,
+    });
+  };
+
   const updateOffice = async () => {
     try {
       // const { data } = await axios.post(`http://localhost:4000/mock/offices/`, { office: officeFormParams } )
-      setAlert('success')
     } catch (error) {
       console.error('error on updateOffice', error)
-      setAlert('error')
     }
   }
 
@@ -43,6 +50,7 @@ const Attribute = ({ slug, attribute, addonBefore, placeholder, setAlert }) => {
       setTimeout(() => {
         updateOffice()
         setEditState('edit')
+        openNotification('bottomRight', attribute)
         console.log('ok')
       }, 3000); 
     }
