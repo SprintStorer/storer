@@ -1,4 +1,9 @@
 .search-bar {
   padding: 5px 20px 20px 10px;
   border: 10px;
- }
+}
+
+.ant-collapse-content-box {
+  display: flex;
+  flex: wrap;
+}
