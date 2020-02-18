@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'antd'
-import Attribute from './Attribute'
+import Attribute from '../Attribute/Attribute.js'
 
 const Office = ({ office }) => {
   console.log('office attributes', Object.keys(office))
@@ -19,6 +19,7 @@ const Office = ({ office }) => {
             attribute={attribute}
             addonBefore={attribute}
             placeholder={office[attribute]}
+            editable={!!(attribute !== 'slug')}
           />)
       }
 

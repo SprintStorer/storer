@@ -4,6 +4,7 @@ import './OfficeTable.css'
 import Office from '../Office/Office'
 import Devices from '../Devices/Devices'
 import { Collapse } from 'antd'
+import { dissoc } from 'ramda'
 const { Panel } = Collapse
 
 const OfficeTable = ({ offices }) => {
@@ -33,7 +34,7 @@ const OfficeTable = ({ offices }) => {
         
         <Office
           key={office.slug}
-          office={office}
+          office={dissoc('devices', office)}
         />
 
         <Devices
