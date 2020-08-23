@@ -69,7 +69,7 @@ const App = () => {
 
       {searchObjHolder.offices ? null : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
 
-      <footer class="footer">
+      <footer className="footer">
         Copyright &copy; ZeroQ ©2019 Authors: K.Becerra, S.Espnioza, R.Thielen.
       </footer>
       

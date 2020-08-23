@@ -36,13 +36,13 @@ const OfficeTable = ({ offices }) => {
           key={office.slug}
           office={dissoc('devices', office)}
         />
-
-        <Devices
-          key={`${office.slug}-${offices.indexOf(off)}`}
-          officeSlug={office.slug}
-          devices={office.devices}
-        />
-
+        {
+          office.devices && <Devices
+            key={`${office.slug}-${offices.indexOf(off)}`}
+            officeSlug={office.slug}
+            devices={office.devices}
+          />
+        }
       </Panel>
     )
   })
