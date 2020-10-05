@@ -1,11 +1,3 @@
-
-.title {
-  font-size: 30px;
-  margin: 10px 10px 5px 20px;
-  font-family: 'Acme';
-  opacity: 0.6;
-}
-
 .App {
   display: flex;
   flex-direction: column;
@@ -17,15 +9,4 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.footer {
-  display: flex;
-  margin-top: auto;
-  justify-content: space-around;
-  opacity: 1;
-  color: #ffffff;
-  padding: 20px;
-  background-color: rgba(0,0,0,0.87);
-  opacity: 0.6;
 }

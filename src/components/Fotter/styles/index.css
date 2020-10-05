@@ -1,0 +1,10 @@
+.footer {
+  display: flex;
+  margin-top: auto;
+  justify-content: space-around;
+  opacity: 1;
+  color: #ffffff;
+  padding: 20px;
+  background-color: #1e222d;
+  opacity: 0.8;
+}
