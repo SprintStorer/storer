@@ -3,6 +3,7 @@ import './App.css'
 import OfficeTable from '../OfficeTable/OfficeTable'
 import * as R from 'ramda'
 import Footer from '../Fotter'
+import Header from '../Header'
 import { Input, Icon, Empty } from 'antd'
 import axios from 'axios'
 const { Search } = Input
@@ -50,10 +51,7 @@ const App = () => {
   return (
     <div className="content">
 
-      <h1 className="title">
-        <Icon type="database" />
-        Storer
-      </h1>
+      <Header/>
 
       <Search
         className="search-bar"
